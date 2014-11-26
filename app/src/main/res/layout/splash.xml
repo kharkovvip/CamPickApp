@@ -9,4 +9,5 @@
         android:id="@+id/splashImage"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/splash" />
+
 </LinearLayout>
