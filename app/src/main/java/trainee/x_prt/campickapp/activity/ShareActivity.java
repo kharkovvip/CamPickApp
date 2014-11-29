@@ -1,14 +1,15 @@
-package trainee.x_prt.campickapp;
+package trainee.x_prt.campickapp.activity;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import trainee.x_prt.campickapp.R;
 
 /**
  * Created by x_prt on 26.11.14.
  */
-public class Share extends Activity {
+public class ShareActivity extends Activity {
 
     ImageView splash;
 
@@ -16,7 +17,6 @@ public class Share extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 
     }
