@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">CamPickApp</string>
         <string name="btnSend">SEND</string>
+        <string name="photoPick">Add Photo</string>
+        <string name="fieldTo">To:</string>
+        <string name="fieldSubject">Subject:</string>
+        <string name="fieldMsg">Message:</string>
 </resources>
 

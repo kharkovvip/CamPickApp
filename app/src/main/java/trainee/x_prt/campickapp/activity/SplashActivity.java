@@ -19,7 +19,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+        setContentView(R.layout.activity_splash);
 
         loading = (ImageView) findViewById(R.id.loading);
         animation = AnimationUtils.loadAnimation(this, R.anim.rotate);
@@ -28,8 +28,9 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, DraftsActivity.class);
+                Intent intent = new Intent(SplashActivity.this, ShareActivity.class);
                 startActivity(intent);
+                finish();
             }
         }, SPLASH_TIME);
     }
