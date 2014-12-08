@@ -1,67 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:screenOrientation="locked"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:padding="10dp"
+    >
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/shareaddphoto"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:id="@+id/photoPick"
-        android:layout_gravity="center_horizontal" />
+        android:layout_width="157dp"
+        android:layout_height="156dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/shareaddphoto"
+        android:background="@color/bitmap"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
+        android:id="@+id/fieldTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fieldTo"
-        android:id="@+id/fieldTo" />
+        android:textColor="@android:color/white"
+        android:layout_above="@+id/editTextTo"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editTextTo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:inputType="textEmailAddress" />
+        android:layout_height="30dp"
+        android:inputType="textEmailAddress"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
+        android:id="@+id/fieldSubject"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fieldSubject"
-        android:id="@+id/fieldSubject" />
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/editTextTo"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editTextSubject"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
+        android:layout_height="30dp"
         android:inputType="textEmailSubject"
-        />
+        android:layout_below="@+id/fieldSubject"
+        android:layout_alignParentStart="true" />
 
     <TextView
+        android:id="@+id/fieldMsg"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/fieldMsg"
-        android:id="@+id/fieldMsg" />
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/editTextSubject"
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editTextMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.32"
-        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent"
         android:inputType="text"
-        />
+        android:layout_above="@+id/buttonSend"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fieldMsg"
+        android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/buttonSend"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
-        android:text="@string/btnSend" />
+        android:background="@drawable/sharebtn"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
-</LinearLayout>
+</RelativeLayout>

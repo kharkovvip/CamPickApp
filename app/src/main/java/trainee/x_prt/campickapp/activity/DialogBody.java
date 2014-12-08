@@ -17,7 +17,7 @@ public class DialogBody extends FragmentActivity {
 
     private void showAlertDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        DialogRealization alertDialog = DialogRealization.newInstance("Some title");
+        DialogRealization alertDialog = DialogRealization.newInstance("Choose");
         alertDialog.show(fm, "fragment_alert");
     }
 }
