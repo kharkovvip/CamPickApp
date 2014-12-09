@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/item_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:adjustViewBounds="true"
+        android:maxHeight="65dp"
+        android:src="@drawable/ford" />
+
+    <TextView
+        android:id="@+id/item_txtAdress"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_adress"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignBaseline="@+id/someText"
+        android:layout_alignBottom="@+id/someText"
+        android:layout_alignEnd="@+id/item_txtSubject" />
+
+    <TextView
+        android:id="@+id/someText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_alignTop="@+id/item_icon"
+        android:layout_toEndOf="@+id/item_txtAdress"
+        android:layout_marginStart="15dp" />
+
+    <TextView
+        android:id="@+id/item_txtCondition"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/someText"
+        android:layout_alignStart="@+id/someText" />
+
+    <TextView
+        android:id="@+id/item_txtSubject"
+        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/item_subject"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_below="@+id/item_txtAdress"
+        android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>

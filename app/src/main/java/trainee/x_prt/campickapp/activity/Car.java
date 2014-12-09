@@ -1,37 +1,38 @@
 package trainee.x_prt.campickapp.activity;
 
 
-
 public class Car {
 
-    private String make;
-    private int year;
+    private int adressID;
+    private int subjectID;
     private int iconID;
-    private String condition;
+    private int adressField;
+    private int subjectField;
 
-    public Car(String make, int year, int iconID, String condition) {
+    public Car(int adressID, int subjectID, int iconID, int adressField, int subjectField) {
         super();
-        this.make = make;
-        this.year = year;
+        this.adressID = this.adressID;
+        this.subjectID = this.subjectID;
         this.iconID = iconID;
-        this.condition = condition;
+        this.adressField = this.adressField;
+        this.adressField = this.subjectField;
 
     }
 
-    public String getMake() {
-        return make;
+    public String getAdressID() {
+        return adressID;
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    public void setAdressID(String adressID) {
+        this.adressID = adressID;
     }
 
-    public int getYear() {
-        return year;
+    public int getSubjectID() {
+        return subjectID;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setSubjectID(int subjectID) {
+        this.subjectID = subjectID;
     }
 
     public int getIconID() {
@@ -42,11 +43,11 @@ public class Car {
         this.iconID = iconID;
     }
 
-    public String getCondition() {
-        return condition;
+    public String getAdressField() {
+        return adressField;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition;
+    public void setAdressField(String adressField) {
+        this.adressField = adressField;
     }
 }

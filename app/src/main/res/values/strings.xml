@@ -8,5 +8,8 @@
     <string name="logo">logo</string>
     <string name="share">Share</string>
     <string name="drafts">Drafts and sent messages</string>
+    <string name="item_adress">Adress:</string>
+    <string name="item_subject">Subject:</string>
+
 </resources>
 

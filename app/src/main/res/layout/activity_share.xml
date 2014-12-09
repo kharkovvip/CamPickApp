@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/sharebtn"
+        android:background="@drawable/share_actions"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
