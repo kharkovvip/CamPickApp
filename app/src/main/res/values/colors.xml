@@ -2,4 +2,6 @@
 <resources>
     <color name="bckgr">#35414c</color>
     <color name="bitmap">#4B5C6A</color>
+    <color name="white">#FFFFFF</color>
+    <color name="blue_white">#93A6B6</color>
 </resources>

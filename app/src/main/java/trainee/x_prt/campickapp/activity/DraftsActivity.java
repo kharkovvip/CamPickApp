@@ -40,13 +40,13 @@ public class DraftsActivity extends Activity {
 
 
     private void populateCarList() {
-        myCars.add(new Car(R.string.item_adress, 1990, R.drawable.ford, "Need Work"));
-        myCars.add(new Car("Toyota", 1995, R.drawable.toyota, "So old"));
-        myCars.add(new Car("Honda", 1999, R.drawable.honda, "Must Have"));
-        myCars.add(new Car("Porsche", 1996, R.drawable.porsche, "Dream Car"));
-        myCars.add(new Car("Jeep", 1980, R.drawable.jeep, "Awesome"));
-        myCars.add(new Car("Rust-Bucket", 1940, R.drawable.rust_bucket, "OMG"));
-        myCars.add(new Car("Moon Lander", 1945, R.drawable.moon_lander, "Landed OK"));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.ford, R.string.temp_adress, R.string.temp_subject));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.toyota, R.string.temp_adress, R.string.temp_subject));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.honda, R.string.temp_adress, R.string.temp_subject));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.porsche, R.string.temp_adress, R.string.temp_subject));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.jeep, R.string.temp_adress, R.string.temp_subject));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.rust_bucket, R.string.temp_adress, R.string.temp_subject));
+        myCars.add(new Car(R.string.item_adress, R.string.item_subject, R.drawable.moon_lander, R.string.temp_adress, R.string.temp_subject));
     }
 
     private void populateListView() {
@@ -97,14 +97,17 @@ public class DraftsActivity extends Activity {
             ImageView carView = (ImageView) convertView.findViewById(R.id.item_icon);
             carView.setImageResource(car.getIconID());
 
-            TextView makeText = (TextView) convertView.findViewById(R.id.item_txtAdress);
-            makeText.setText(car.getAdressID());
+            TextView makeAdress = (TextView) convertView.findViewById(R.id.item_txtAdress);
+            makeAdress.setText(car.getAdressID());
 
-            TextView yearText = (TextView) convertView.findViewById(R.id.item_txtSubject);
-            yearText.setText(Integer.toString(car.getSubjectID()));
+            TextView makeSubject = (TextView) convertView.findViewById(R.id.item_txtSubject);
+            makeSubject.setText(car.getSubjectID());
 
-            TextView conditionText = (TextView) convertView.findViewById(R.id.item_txtCondition);
-            conditionText.setText(car.getAdressField());
+            TextView tempAdres = (TextView) convertView.findViewById(R.id.item_tempAdress);
+            tempAdres.setText(car.getAdressField());
+
+            TextView tempSubject = (TextView) convertView.findViewById(R.id.item_tempSubject);
+            tempSubject.setText(car.getSubjectField());
 
             return convertView;
 

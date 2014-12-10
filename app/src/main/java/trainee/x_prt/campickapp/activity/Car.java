@@ -11,19 +11,19 @@ public class Car {
 
     public Car(int adressID, int subjectID, int iconID, int adressField, int subjectField) {
         super();
-        this.adressID = this.adressID;
-        this.subjectID = this.subjectID;
+        this.adressID = adressID;
+        this.subjectID = subjectID;
         this.iconID = iconID;
-        this.adressField = this.adressField;
-        this.adressField = this.subjectField;
+        this.adressField = adressField;
+        this.subjectField = subjectField;
 
     }
 
-    public String getAdressID() {
+    public int getAdressID() {
         return adressID;
     }
 
-    public void setAdressID(String adressID) {
+    public void setAdressID(int adressID) {
         this.adressID = adressID;
     }
 
@@ -43,11 +43,19 @@ public class Car {
         this.iconID = iconID;
     }
 
-    public String getAdressField() {
+    public int getAdressField() {
         return adressField;
     }
 
-    public void setAdressField(String adressField) {
+    public void setAdressField(int adressField) {
         this.adressField = adressField;
+    }
+
+    public int getSubjectField() {
+        return subjectField;
+    }
+
+    public void setSubjectField(int subjectField) {
+        this.subjectField = subjectField;
     }
 }

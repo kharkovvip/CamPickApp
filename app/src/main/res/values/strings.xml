@@ -10,6 +10,9 @@
     <string name="drafts">Drafts and sent messages</string>
     <string name="item_adress">Adress:</string>
     <string name="item_subject">Subject:</string>
+    <string name="temp_adress">example@gmail.com</string>
+    <string name="temp_subject">Awesome car!</string>
+    <string name="add_photo">Add photo</string>
 
 </resources>
 
