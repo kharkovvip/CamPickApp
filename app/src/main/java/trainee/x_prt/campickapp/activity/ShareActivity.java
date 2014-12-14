@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -31,7 +32,9 @@ public class ShareActivity extends FragmentActivity {
     ImageView photoPick;
     Button buttonSend;
     EditText textTo, textSubject, textMessage;
+    TextView addPhotoTxt;
     private String filePath;
+    private DataHandler dataHandler;
 
 
     //Button SEND realization:
@@ -40,12 +43,17 @@ public class ShareActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_share);
         getActionBar().setTitle(R.string.share);
+        dataHandler = new DataHandler(this);
+        dataHandler.open();
+
 
         buttonSend = (Button) findViewById(R.id.buttonSend);
         textTo = (EditText) findViewById(R.id.editTextTo);
         textSubject = (EditText) findViewById(R.id.editTextSubject);
         textMessage = (EditText) findViewById(R.id.editTextMessage);
         buttonSend.setOnClickListener(new OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 String to = textTo.getText().toString();
@@ -58,12 +66,14 @@ public class ShareActivity extends FragmentActivity {
                 email.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
                 email.setType("image/*");
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                Mail mail = new Mail(to, subject, message);
+                dataHandler.saveMail(mail);
             }
         });
 
 //      PhotoPick realization:
         photoPick = (ImageView) findViewById(R.id.photoPick);
-        photoPick.setOnClickListener(new View.OnClickListener() {
+        photoPick.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -96,6 +106,9 @@ public class ShareActivity extends FragmentActivity {
             }
             photoPick.setImageBitmap(imageBitmap);
         }
+        addPhotoTxt = (TextView) findViewById(R.id.addPhotoTxt);
+        addPhotoTxt.setVisibility(View.GONE);
+
     }
 
     private void saveBitmap(Bitmap imageBitmap) {
@@ -114,4 +127,12 @@ public class ShareActivity extends FragmentActivity {
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataHandler.close();
+    }
 }
+
+
