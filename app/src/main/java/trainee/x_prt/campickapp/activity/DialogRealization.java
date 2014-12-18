@@ -29,12 +29,12 @@ public class DialogRealization extends android.support.v4.app.DialogFragment {
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setItems(R.array.numbers, new DialogInterface.OnClickListener() {
+        builder.setItems(R.array.resource, new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(cameraIntent, ShareActivity.REQUEST_IMAGE_CAPTURE);
                         break;
                     case 1:

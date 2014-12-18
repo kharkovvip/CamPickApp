@@ -2,7 +2,12 @@ package trainee.x_prt.campickapp.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,10 +29,12 @@ import trainee.x_prt.campickapp.R;
 import static trainee.x_prt.campickapp.R.string.drafts;
 
 public class DraftsActivity extends Activity {
-    public ArrayList<Mail> mails = new ArrayList<Mail>();
+    public ArrayList<Mail> mYmails = new ArrayList<Mail>();
     private ActionBar supportActionBar;
-    DataHandler dataHandler;
+    private DataHandler dataHandler;
     private MyListAdapter adapter;
+    Button removeBtn;
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,12 +44,42 @@ public class DraftsActivity extends Activity {
         adapter = new MyListAdapter();
         dataHandler = new DataHandler(this);
         dataHandler.open();
+
         ListView list = (ListView) findViewById(R.id.mailListView);
         list.setAdapter(adapter);
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Mail clickedMail = mails.get(position);
+                Mail clickedMail = dataHandler.getMails().get(position);
+
+            }
+        });
+
+        removeBtn = (Button) findViewById(R.id.removeBtn);
+
+        removeBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DraftsActivity.this);
+
+                builder.setMessage("Are you sure you want to remove all messages?")
+                        .setPositiveButton(R.string.btnNoTxt, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+
+                        .setNegativeButton(R.string.btnYesTxt, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dataHandler.removeMails();
+                                adapter.setMails(dataHandler.getMails());
+                                removeBtn.setVisibility(View.GONE);
+                            }
+                        })
+                        .setCancelable(false);
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
     }
@@ -49,6 +88,12 @@ public class DraftsActivity extends Activity {
     protected void onResume() {
         super.onResume();
         adapter.setMails(dataHandler.getMails());
+        if (dataHandler.getMails().isEmpty()) {
+            removeBtn.setVisibility(View.GONE);
+        } else {
+            removeBtn.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -59,7 +104,6 @@ public class DraftsActivity extends Activity {
 
     private class MyListAdapter extends BaseAdapter {
         private List<Mail> mails = Collections.emptyList();
-
 
         @Override
         public int getCount() {
@@ -80,17 +124,21 @@ public class DraftsActivity extends Activity {
         public View getView(int position, View convertView, ViewGroup viewGroup) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(R.layout.item_view, viewGroup, false);
-            }Mail mail = getItem(position);
-//
-//            ImageView mailListView = (ImageView) convertView.findViewById(R.id.item_icon);
-//            mailListView.setImageResource(mail.getIconID());
+            }
+            Mail mail = getItem(position);
+
+            ImageView mailListView = (ImageView) convertView.findViewById(R.id.item_icon);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeFile(mail.getFilePath(), options);
+            mailListView.setImageBitmap(bitmap);
 
             TextView makeAdress = (TextView) convertView.findViewById(R.id.item_txtAdress);
 
             TextView makeSubject = (TextView) convertView.findViewById(R.id.item_txtSubject);
 
-            TextView tempAdres = (TextView) convertView.findViewById(R.id.item_tempAdress);
-            tempAdres.setText(mail.getTo());
+            TextView tempAdress = (TextView) convertView.findViewById(R.id.item_tempAdress);
+            tempAdress.setText(mail.getTo());
 
             TextView tempSubject = (TextView) convertView.findViewById(R.id.item_tempSubject);
             tempSubject.setText(mail.getSubject());
@@ -102,10 +150,7 @@ public class DraftsActivity extends Activity {
             this.mails = mails;
             notifyDataSetChanged();
         }
-
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -123,6 +168,5 @@ public class DraftsActivity extends Activity {
     public ActionBar getSupportActionBar() {
         return supportActionBar;
     }
-
 }
 

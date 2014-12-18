@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ActionBarStyle</item>
         <item name="android:editTextStyle">@style/myEditText</item>
-        <item name="android:windowBackground">@color/bckgr</item>
+        <item name="android:windowBackground">@color/bckg</item>
         <item name="android:icon">@android:color/transparent</item>
     </style>
 

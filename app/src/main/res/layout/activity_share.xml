@@ -8,6 +8,7 @@
     android:weightSum="1">
 
     <FrameLayout
+        android:id="@+id/framePhotoPick"
         android:layout_width="157dp"
         android:layout_height="156dp"
         android:layout_alignParentTop="true"
@@ -85,14 +86,14 @@
         android:id="@+id/editTextMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttonSend"
+        android:layout_above="@+id/buttonShare"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/fieldMsg"
         android:layout_marginBottom="10dp"
         android:inputType="text" />
 
     <Button
-        android:id="@+id/buttonSend"
+        android:id="@+id/buttonShare"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_alignParentBottom="true"

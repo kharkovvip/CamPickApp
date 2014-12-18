@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -30,14 +29,13 @@ public class ShareActivity extends FragmentActivity {
 
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView photoPick;
-    Button buttonSend;
+    Button buttonShare;
     EditText textTo, textSubject, textMessage;
     TextView addPhotoTxt;
     private String filePath;
     private DataHandler dataHandler;
 
-
-    //Button SEND realization:
+    //Button SHARE realization:
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,13 +44,11 @@ public class ShareActivity extends FragmentActivity {
         dataHandler = new DataHandler(this);
         dataHandler.open();
 
-
-        buttonSend = (Button) findViewById(R.id.buttonSend);
+        buttonShare = (Button) findViewById(R.id.buttonShare);
         textTo = (EditText) findViewById(R.id.editTextTo);
         textSubject = (EditText) findViewById(R.id.editTextSubject);
         textMessage = (EditText) findViewById(R.id.editTextMessage);
-        buttonSend.setOnClickListener(new OnClickListener() {
-
+        buttonShare.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -66,7 +62,7 @@ public class ShareActivity extends FragmentActivity {
                 email.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
                 email.setType("image/*");
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
-                Mail mail = new Mail(to, subject, message);
+                Mail mail = new Mail(filePath, to, subject, message);
                 dataHandler.saveMail(mail);
             }
         });
@@ -102,6 +98,7 @@ public class ShareActivity extends FragmentActivity {
                 imageBitmap = BitmapFactory.decodeFile(filePath);
             } else {
                 imageBitmap = (Bitmap) extras.get("data");
+                imageBitmap.getHeight();
                 saveBitmap(imageBitmap);
             }
             photoPick.setImageBitmap(imageBitmap);
@@ -116,7 +113,10 @@ public class ShareActivity extends FragmentActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            filePath = Environment.getExternalStorageDirectory() + "/_camera.png";
+
+            File pickDirectory = new File("/sdcard/CamPickApp");
+            pickDirectory.mkdirs();
+            filePath = new String(pickDirectory + "/Pick_" + System.currentTimeMillis() + ".png");
             FileOutputStream fo = new FileOutputStream(new File(filePath));
             fo.write(byteArray);
             fo.flush();
@@ -127,6 +127,16 @@ public class ShareActivity extends FragmentActivity {
             e.printStackTrace();
         }
     }
+
+//    @Override
+//    protected void onRestart() {
+//        super.onResume();
+//        ((EditText) findViewById(R.id.editTextTo)).setText("");
+//        ((EditText) findViewById(R.id.editTextSubject)).setText("");
+//        ((EditText) findViewById(R.id.editTextMessage)).setText("");
+//        ((ImageView) findViewById(R.id.photoPick)).setImageResource(R.drawable.shareaddphoto);
+//        ((TextView) findViewById(R.id.addPhotoTxt)).setText(R.string.add_photo);
+//    }
 
     @Override
     protected void onDestroy() {

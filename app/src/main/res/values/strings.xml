@@ -13,6 +13,10 @@
     <string name="temp_adress">example@gmail.com</string>
     <string name="temp_subject">Awesome car!</string>
     <string name="add_photo">Add photo</string>
+    <string name="newMsg">New message</string>
+    <string name="btnYesTxt">Yes</string>
+    <string name="btnNoTxt">No</string>
+    <string name="remove_dialog_question">Are you sure you want to remove all messages?</string>
 
 </resources>
 

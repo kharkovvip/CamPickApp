@@ -11,7 +11,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
-        android:maxHeight="65dp"
+        android:maxHeight="63dp"
+        android:maxWidth="90dp"
         android:src="@drawable/ford" />
 
     <TextView

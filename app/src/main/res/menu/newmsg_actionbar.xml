@@ -4,5 +4,7 @@
         android:icon="@drawable/newmsg_actions"
         android:showAsAction="always"
         android:id="@+id/newMsgBtn"
-        android:title="" />
+        android:title="@string/newMsg"
+
+        />
 </menu>

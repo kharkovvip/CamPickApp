@@ -11,10 +11,10 @@ import java.util.ArrayList;
 
 public class DataHandler {
     SQLiteDatabase db;
-    public static final String MAILS_TABLE_NAME = "mails";
+    public static final String MAILS_TABLE_NAME = "mailsTable";
     public static final String DATA_BASE_NAME = "myDatabase";
     public static final int DATABASE_VERSION = 1;
-    public static final String TABLE_CREATE = "CREATE TABLE mails(address TEXT, subject TEXT, message TEXT);";
+    public static final String TABLE_CREATE = "CREATE TABLE mailsTable(filePath TEXT, address TEXT, subject TEXT, message TEXT);";
 
     public DataBaseHelper dbHelper;
 
@@ -51,27 +51,32 @@ public class DataHandler {
 
     public void saveMail(Mail mail) {
         ContentValues content = new ContentValues();
+        content.put("filePath", mail.getFilePath());
         content.put("address", mail.getTo());
         content.put("subject", mail.getSubject());
         content.put("message", mail.getMessage());
         db.insert(MAILS_TABLE_NAME, null, content);
     }
 
+    public void removeMails() {
+        db.delete("mailsTable", null, null);
+    }
 
     public ArrayList<Mail> getMails() {
         Cursor cursor = db.query(MAILS_TABLE_NAME, null, null, null, null, null, null);
-        ArrayList<Mail> mails = new ArrayList();
+        ArrayList<Mail> myMails = new ArrayList();
         while (cursor.moveToNext()) {
+            String filePath = cursor.getString(cursor.getColumnIndex("filePath"));
             String to = cursor.getString(cursor.getColumnIndex("address"));
             String subject = cursor.getString(cursor.getColumnIndex("subject"));
             String message = cursor.getString(cursor.getColumnIndex("message"));
-            Mail mail = new Mail(to, subject, message);
-            mails.add(mail);
+            Mail mail = new Mail(filePath, to, subject, message);
+            myMails.add(mail);
             // do what ever you want here
         }
 
         cursor.close();
-        return mails;
+        return myMails;
     }
 }
 
