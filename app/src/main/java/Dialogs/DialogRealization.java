@@ -1,4 +1,4 @@
-package trainee.x_prt.campickapp.activity;
+package Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 
 import trainee.x_prt.campickapp.R;
+import trainee.x_prt.campickapp.activity.ShareActivity;
 
 public class DialogRealization extends android.support.v4.app.DialogFragment {
 

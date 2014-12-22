@@ -52,7 +52,8 @@
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        />
 
     <TextView
         android:id="@+id/fieldSubject"
@@ -94,13 +95,23 @@
 
     <Button
         android:id="@+id/buttonShare"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:background="@drawable/share_actions" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shareBtnTxt"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:id="@+id/shareBtnTxtView"
+        android:layout_alignBaseline="@id/buttonShare"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

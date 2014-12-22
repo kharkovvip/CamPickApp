@@ -8,7 +8,7 @@
     <string name="logo">logo</string>
     <string name="share">Share</string>
     <string name="drafts">Drafts and sent messages</string>
-    <string name="item_adress">Adress:</string>
+    <string name="item_adress">Address:</string>
     <string name="item_subject">Subject:</string>
     <string name="temp_adress">example@gmail.com</string>
     <string name="temp_subject">Awesome car!</string>
@@ -17,6 +17,10 @@
     <string name="btnYesTxt">Yes</string>
     <string name="btnNoTxt">No</string>
     <string name="remove_dialog_question">Are you sure you want to remove all messages?</string>
+    <string name="removeBtnTxt">Remove all</string>
+    <string name="emailDigits">0123456789*QWERTYUIOPASDFGHJKLZXCVBNM@qwertyuiopasdfghjklzxcvbnm_-.</string>
+    <string name="shareBtnTxt">Share</string>
+    <string name="changePhotoTxt">Change photo</string>
 
 </resources>
 

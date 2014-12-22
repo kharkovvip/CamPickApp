@@ -22,6 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import DataBase.DataHandler;
+import DataBase.Mail;
+import Dialogs.DialogRealization;
 import trainee.x_prt.campickapp.R;
 
 
@@ -34,8 +37,8 @@ public class ShareActivity extends FragmentActivity {
     TextView addPhotoTxt;
     private String filePath;
     private DataHandler dataHandler;
+    public static String MAIL_ID;
 
-    //Button SHARE realization:
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +51,9 @@ public class ShareActivity extends FragmentActivity {
         textTo = (EditText) findViewById(R.id.editTextTo);
         textSubject = (EditText) findViewById(R.id.editTextSubject);
         textMessage = (EditText) findViewById(R.id.editTextMessage);
-        buttonShare.setOnClickListener(new OnClickListener() {
 
+        //Button SHARE realization:
+        buttonShare.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 String to = textTo.getText().toString();
@@ -60,9 +64,9 @@ public class ShareActivity extends FragmentActivity {
                 email.putExtra(Intent.EXTRA_SUBJECT, subject);
                 email.putExtra(Intent.EXTRA_TEXT, message);
                 email.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
-                email.setType("image/*");
+                email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
-                Mail mail = new Mail(filePath, to, subject, message);
+                Mail mail = new Mail(null, filePath, to, subject, message);
                 dataHandler.saveMail(mail);
             }
         });
@@ -78,8 +82,23 @@ public class ShareActivity extends FragmentActivity {
                 alertDialog.show(fm, "fragment_alert");
             }
         });
+
+        // Clicked Item
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.containsKey(MAIL_ID)) {
+            String mailId = extras.getString(MAIL_ID);
+            Mail mail = dataHandler.getMail(mailId);
+            textTo.setText(mail.getTo());
+            textSubject.setText(mail.getSubject());
+            textMessage.setText(mail.getMessage());
+            filePath = mail.getFilePath();
+            Bitmap imageBitmap = BitmapFactory.decodeFile(filePath);
+            photoPick.setImageBitmap(imageBitmap);
+            saveBitmap(imageBitmap);
+        }
     }
 
+    // Add photo realization
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -105,7 +124,6 @@ public class ShareActivity extends FragmentActivity {
         }
         addPhotoTxt = (TextView) findViewById(R.id.addPhotoTxt);
         addPhotoTxt.setVisibility(View.GONE);
-
     }
 
     private void saveBitmap(Bitmap imageBitmap) {
@@ -127,16 +145,6 @@ public class ShareActivity extends FragmentActivity {
             e.printStackTrace();
         }
     }
-
-//    @Override
-//    protected void onRestart() {
-//        super.onResume();
-//        ((EditText) findViewById(R.id.editTextTo)).setText("");
-//        ((EditText) findViewById(R.id.editTextSubject)).setText("");
-//        ((EditText) findViewById(R.id.editTextMessage)).setText("");
-//        ((ImageView) findViewById(R.id.photoPick)).setImageResource(R.drawable.shareaddphoto);
-//        ((TextView) findViewById(R.id.addPhotoTxt)).setText(R.string.add_photo);
-//    }
 
     @Override
     protected void onDestroy() {

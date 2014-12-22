@@ -1,4 +1,4 @@
-package trainee.x_prt.campickapp.activity;
+package Dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

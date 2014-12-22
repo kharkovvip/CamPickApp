@@ -13,7 +13,7 @@
         android:adjustViewBounds="true"
         android:maxHeight="63dp"
         android:maxWidth="90dp"
-        android:src="@drawable/ford" />
+        android:src="@drawable/popup_54626e" />
 
     <TextView
         android:id="@+id/item_txtAdress"

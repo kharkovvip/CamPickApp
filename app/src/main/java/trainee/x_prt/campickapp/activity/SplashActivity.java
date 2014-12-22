@@ -15,6 +15,7 @@ public class SplashActivity extends Activity {
     private final static int SPLASH_TIME = 3000;
     ImageView loading;
     ImageView blinkView;
+    ImageView flashLightView;
     Animation animation;
 
     @Override
@@ -29,6 +30,10 @@ public class SplashActivity extends Activity {
         blinkView = (ImageView) findViewById(R.id.blinkView);
         animation = AnimationUtils.loadAnimation(this, R.anim.blink_animation);
         blinkView.startAnimation(animation);
+
+        flashLightView = (ImageView) findViewById(R.id.flashLightView);
+        animation = AnimationUtils.loadAnimation(this, R.anim.flash_animation);
+        flashLightView.startAnimation(animation);
 
         new Handler().postDelayed(new Runnable() {
             @Override

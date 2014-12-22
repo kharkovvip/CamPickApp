@@ -1,18 +1,28 @@
-package trainee.x_prt.campickapp.activity;
+package DataBase;
 
 public class Mail {
 
+    private String draftsID;
     private String filePath;
     private String to;
     private String subject;
     private String message;
 
-    public Mail(String filePath, String to, String subject, String message) {
+    public Mail(String draftsID, String filePath, String to, String subject, String message) {
         super();
+        this.draftsID = draftsID;
         this.filePath = filePath;
         this.to = to;
         this.subject = subject;
         this.message = message;
+    }
+
+    public String getDraftsID() {
+        return draftsID;
+    }
+
+    public void setDraftsID(String draftsID) {
+        this.draftsID = draftsID;
     }
 
     public String getFilePath() {

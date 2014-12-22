@@ -2,5 +2,5 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/remove" android:state_pressed="true" />
-    <item android:drawable="@drawable/remove_act" />
+    <item android:drawable="@drawable/removeact" />
 </selector>

@@ -13,12 +13,18 @@
         android:layout_height="wrap_content"
         android:scaleType="fitCenter"
         android:id="@+id/splashImage"
-        android:src="@drawable/photo"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
+        android:src="@drawable/photocamera"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="140dp" />
+
+    <ImageView
+        android:id="@+id/flashLightView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/flashlight"
+        android:layout_alignBottom="@+id/splashImage"
+        android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -31,11 +37,13 @@
         android:layout_centerHorizontal="true" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/blinkView"
-        android:src="@drawable/backbtnfantome"
-        android:layout_alignBottom="@+id/splashImage"
-        android:layout_alignParentStart="true" />
+        android:src="@drawable/blinkhorisontal"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+
+        />
 
 </RelativeLayout>
