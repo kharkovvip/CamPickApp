@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:screenOrientation="locked"
+    android:weightSum="1">
+
+    <FrameLayout
+        android:id="@+id/framePhotoPick"
+        android:layout_width="157dp"
+        android:layout_height="156dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/photoPick"
+            android:layout_width="157dp"
+            android:layout_height="156dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/bitmap"
+            android:src="@drawable/shareaddphoto" />
+
+        <TextView
+            android:id="@+id/addPhotoTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="@string/add_photo"
+            android:textColor="@color/blue_white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal|bottom" />
+    </FrameLayout>
+
+
+    <TextView
+        android:id="@+id/fieldTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextTo"
+        android:layout_alignParentStart="true"
+        android:text="@string/fieldTo"
+        android:textColor="@color/blue_white" />
+
+    <EditText
+        android:id="@+id/editTextTo"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:inputType="textEmailAddress"
+        />
+
+    <TextView
+        android:id="@+id/fieldSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextTo"
+        android:layout_marginTop="10dp"
+        android:text="@string/fieldSubject"
+        android:textColor="@color/blue_white" />
+
+    <EditText
+        android:id="@+id/editTextSubject"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fieldSubject"
+        android:inputType="textEmailSubject" />
+
+    <TextView
+        android:id="@+id/fieldMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editTextSubject"
+        android:layout_marginTop="10dp"
+        android:text="@string/fieldMsg"
+        android:textColor="@color/blue_white" />
+
+    <EditText
+        android:id="@+id/editTextMessage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/buttonShare"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fieldMsg"
+        android:layout_marginBottom="10dp"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonShare"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/share_actions" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shareBtnTxt"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:id="@+id/shareBtnTxtView"
+        android:layout_alignBaseline="@id/buttonShare"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

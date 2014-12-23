@@ -1,72 +1,219 @@
 package trainee.x_prt.campickapp.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import database.DataHandler;
+import database.Mail;
 import trainee.x_prt.campickapp.R;
 
-public class DraftsActivity extends Activity implements OnClickListener {
-    private static final int PICK_IMAGE = 1;
-    Button buttonSend;
-    EditText textTo, textSubject, textMessage;
-    private String imageFilePath;
+import static trainee.x_prt.campickapp.R.string.drafts;
+
+public class DraftsActivity extends Activity {
+    public ArrayList<Mail> myMails = new ArrayList<Mail>();
+    private DataHandler dataHandler;
+    private MyListAdapter adapter;
+    Button removeBtn;
+    TextView removeBtnTextView;
+    FrameLayout removeBtnFrame;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.drafts);
-        buttonSend = (Button) findViewById(R.id.buttonSend);
-        textTo = (EditText) findViewById(R.id.editTextTo);
-        textSubject = (EditText) findViewById(R.id.editTextSubject);
-        textMessage = (EditText) findViewById(R.id.editTextMessage);
-        buttonSend.setOnClickListener(this);
-        findViewById(R.id.photoPick).setOnClickListener(new OnClickListener() {
+        setContentView(R.layout.activity_drafts);
+        getActionBar().setTitle(drafts);
+        adapter = new MyListAdapter();
+        dataHandler = new DataHandler(this);
+        dataHandler.open();
+
+        //Clicked Item to enter Draft
+        ListView mailListView = (ListView) findViewById(R.id.mailListView);
+        mailListView.setAdapter(adapter);
+        mailListView.setOnItemClickListener(adapterListener);
+
+        //Longclicked Item to remove
+        mailListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(DraftsActivity.this);
+                builder.setMessage("Are you sure you want to remove this message?")
+                        .setPositiveButton(R.string.btnNoTxt, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        })
+
+                        .setNegativeButton(R.string.btnYesTxt, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                Mail mail = adapter.getItem(position);
+                                dataHandler.removeMail(mail.getDraftsID());
+                                adapter.setMails(dataHandler.getDraftlist());
+                            }
+                        })
+                        .setCancelable(false);
+                AlertDialog alert = builder.create();
+                alert.show();
+                return true;
+            }
+        });
+
+        //Remove All Button
+        removeBtn = (Button) findViewById(R.id.removeBtn);
+        removeBtnTextView = (TextView) findViewById(R.id.removeBtnTextView);
+        removeBtnFrame = (FrameLayout) findViewById(R.id.removeBtnFrame);
+        removeBtn.setOnClickListener(listener);
+
+        removeBtn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            public boolean onLongClick(View view) {
+                removeBtn.setActivated(false);
+                Toast.makeText(getApplicationContext(), "Click once, please.",
+                        Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }
 
-    @Override
-    public void onClick(View v) {
-        String to = textTo.getText().toString();
-        String subject = textSubject.getText().toString();
-        String message = textMessage.getText().toString();
+    private AdapterView.OnItemClickListener adapterListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+            Mail mail = adapter.getItem(position);
+            Bundle bundle = new Bundle();
+            bundle.putString(ShareActivity.MAIL_ID, mail.getDraftsID());
+            Intent intent = new Intent();
+            intent.putExtras(bundle);
+            intent.setClass(getBaseContext(), ShareActivity.class);
+            startActivity(intent);
 
-        Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
-        email.putExtra(Intent.EXTRA_SUBJECT, subject);
-        email.putExtra(Intent.EXTRA_TEXT, message);
-        email.putExtra(Intent.EXTRA_STREAM, Uri.parse(imageFilePath));
-        email.setType("text/plain");
-        email.setType("image/*");
-        startActivity(Intent.createChooser(email, "Choose an Email client:"));
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
-            Uri uri = data.getData();
-
-            //User had pick an image.
-            Cursor cursor = getContentResolver().query(uri, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA}, null, null, null);
-            cursor.moveToFirst();
-
-            //Link to the image
-            imageFilePath = cursor.getString(0);
-            cursor.close();
         }
-        super.onActivityResult(requestCode, resultCode, data);
+    };
+
+    private View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DraftsActivity.this);
+            builder.setMessage("Are you sure you want to remove all messages?")
+                    .setPositiveButton(R.string.btnNoTxt, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.btnYesTxt, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dataHandler.removeMails();
+                            adapter.setMails(dataHandler.getDraftlist());
+                            removeBtnFrame.setVisibility(View.GONE);
+                        }
+                    })
+                    .setCancelable(false);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    };
+
+    //Hiding Remove Button when list is empty
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.setMails(dataHandler.getDraftlist());
+        if (dataHandler.getDraftlist().isEmpty()) {
+            removeBtnFrame.setVisibility(View.GONE);
+        } else {
+            removeBtnFrame.setVisibility(View.VISIBLE);
+        }
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataHandler.close();
+    }
+
+    //Drafts list
+    private class MyListAdapter extends BaseAdapter {
+        private List<Mail> mails = Collections.emptyList();
+
+        @Override
+        public int getCount() {
+            return mails.size();
+        }
+
+        @Override
+        public Mail getItem(int i) {
+            return mails.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.item_view, viewGroup, false);
+            }
+            Mail mail = getItem(position);
+
+            ImageView mailListView = (ImageView) convertView.findViewById(R.id.item_icon);
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap bitmap = BitmapFactory.decodeFile(mail.getFilePath(), options);
+            mailListView.setImageBitmap(bitmap);
+
+            TextView makeAdress = (TextView) convertView.findViewById(R.id.item_txtAddress);
+
+            TextView makeSubject = (TextView) convertView.findViewById(R.id.item_txtSubject);
+
+            TextView tempAdress = (TextView) convertView.findViewById(R.id.item_tempAddress);
+            tempAdress.setText(mail.getTo());
+
+            TextView tempSubject = (TextView) convertView.findViewById(R.id.item_tempSubject);
+            tempSubject.setText(mail.getSubject());
+
+            return convertView;
+        }
+
+        public void setMails(ArrayList<Mail> mails) {
+            this.mails = mails;
+            notifyDataSetChanged();
+        }
+    }
+
+    //Button PLUS - New Message
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.newmsg_actionbar, menu);
+        menu.findItem(R.id.newMsgBtn).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                startActivity(new Intent(DraftsActivity.this, ShareActivity.class));
+                return false;
+            }
+        });
+        return super.onCreateOptionsMenu(menu);
+    }
+
 }
+
