@@ -24,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import DataBase.DataHandler;
-import DataBase.Mail;
+import database.DataHandler;
+import database.Mail;
 import trainee.x_prt.campickapp.R;
 
 import static trainee.x_prt.campickapp.R.string.drafts;
@@ -50,19 +50,7 @@ public class DraftsActivity extends Activity {
         //Clicked Item to enter Draft
         ListView mailListView = (ListView) findViewById(R.id.mailListView);
         mailListView.setAdapter(adapter);
-        mailListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
-                Mail mail = adapter.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putString(ShareActivity.MAIL_ID, mail.getDraftsID());
-                Intent intent = new Intent();
-                intent.putExtras(bundle);
-                intent.setClass(getBaseContext(), ShareActivity.class);
-                startActivity(intent);
-
-            }
-        });
+        mailListView.setOnItemClickListener(adapterListener);
 
         //Longclicked Item to remove
         mailListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -79,7 +67,7 @@ public class DraftsActivity extends Activity {
                             public void onClick(DialogInterface dialog, int id) {
                                 Mail mail = adapter.getItem(position);
                                 dataHandler.removeMail(mail.getDraftsID());
-                                adapter.setMails(dataHandler.getMails());
+                                adapter.setMails(dataHandler.getDraftlist());
                             }
                         })
                         .setCancelable(false);
@@ -93,30 +81,7 @@ public class DraftsActivity extends Activity {
         removeBtn = (Button) findViewById(R.id.removeBtn);
         removeBtnTextView = (TextView) findViewById(R.id.removeBtnTextView);
         removeBtnFrame = (FrameLayout) findViewById(R.id.removeBtnFrame);
-        removeBtn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(DraftsActivity.this);
-                builder.setMessage("Are you sure you want to remove all messages?")
-                        .setPositiveButton(R.string.btnNoTxt, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        })
-
-                        .setNegativeButton(R.string.btnYesTxt, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dataHandler.removeMails();
-                                adapter.setMails(dataHandler.getMails());
-                                removeBtnFrame.setVisibility(View.GONE);
-                            }
-                        })
-                        .setCancelable(false);
-                AlertDialog alert = builder.create();
-                alert.show();
-            }
-        });
+        removeBtn.setOnClickListener(listener);
 
         removeBtn.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -129,12 +94,49 @@ public class DraftsActivity extends Activity {
         });
     }
 
+    private AdapterView.OnItemClickListener adapterListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View viewClicked, int position, long id) {
+            Mail mail = adapter.getItem(position);
+            Bundle bundle = new Bundle();
+            bundle.putString(ShareActivity.MAIL_ID, mail.getDraftsID());
+            Intent intent = new Intent();
+            intent.putExtras(bundle);
+            intent.setClass(getBaseContext(), ShareActivity.class);
+            startActivity(intent);
+
+        }
+    };
+
+    private View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(DraftsActivity.this);
+            builder.setMessage("Are you sure you want to remove all messages?")
+                    .setPositiveButton(R.string.btnNoTxt, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton(R.string.btnYesTxt, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dataHandler.removeMails();
+                            adapter.setMails(dataHandler.getDraftlist());
+                            removeBtnFrame.setVisibility(View.GONE);
+                        }
+                    })
+                    .setCancelable(false);
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    };
+
     //Hiding Remove Button when list is empty
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.setMails(dataHandler.getMails());
-        if (dataHandler.getMails().isEmpty()) {
+        adapter.setMails(dataHandler.getDraftlist());
+        if (dataHandler.getDraftlist().isEmpty()) {
             removeBtnFrame.setVisibility(View.GONE);
         } else {
             removeBtnFrame.setVisibility(View.VISIBLE);
@@ -180,11 +182,11 @@ public class DraftsActivity extends Activity {
             Bitmap bitmap = BitmapFactory.decodeFile(mail.getFilePath(), options);
             mailListView.setImageBitmap(bitmap);
 
-            TextView makeAdress = (TextView) convertView.findViewById(R.id.item_txtAdress);
+            TextView makeAdress = (TextView) convertView.findViewById(R.id.item_txtAddress);
 
             TextView makeSubject = (TextView) convertView.findViewById(R.id.item_txtSubject);
 
-            TextView tempAdress = (TextView) convertView.findViewById(R.id.item_tempAdress);
+            TextView tempAdress = (TextView) convertView.findViewById(R.id.item_tempAddress);
             tempAdress.setText(mail.getTo());
 
             TextView tempSubject = (TextView) convertView.findViewById(R.id.item_tempSubject);

@@ -1,4 +1,4 @@
-package DataBase;
+package database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -69,36 +69,33 @@ public class DataHandler {
         db.delete("mailsTable", null, null);
     }
 
-    public Mail getMail(String mailId) {
+    public Mail getDraft(String mailId) {
         String whereClause = "draftsID = ?";
         String[] whereArgs = new String[]{mailId};
         Cursor c = db.query(MAILS_TABLE_NAME, null, whereClause, whereArgs, null, null, null);
         c.moveToFirst();
+        return getMail(c);
+    }
+
+    public ArrayList<Mail> getDraftlist() {
+        Cursor cursor = db.query(MAILS_TABLE_NAME, null, null, null, null, null, null);
+        ArrayList<Mail> myMails = new ArrayList();
+        while (cursor.moveToNext()) {
+            myMails.add(getMail(cursor));
+        }
+        cursor.close();
+        return myMails;
+    }
+
+    Mail getMail(Cursor c) {
         String draftsID = c.getString(c.getColumnIndex("draftsID"));
         String filePath = c.getString(c.getColumnIndex("filePath"));
         String to = c.getString(c.getColumnIndex("address"));
         String subject = c.getString(c.getColumnIndex("subject"));
         String message = c.getString(c.getColumnIndex("message"));
         Mail mail = new Mail(draftsID, filePath, to, subject, message);
-
         return mail;
     }
 
-    public ArrayList<Mail> getMails() {
-        Cursor cursor = db.query(MAILS_TABLE_NAME, null, null, null, null, null, null);
-        ArrayList<Mail> myMails = new ArrayList();
-        while (cursor.moveToNext()) {
-            String draftsID = cursor.getString(cursor.getColumnIndex("draftsID"));
-            String filePath = cursor.getString(cursor.getColumnIndex("filePath"));
-            String to = cursor.getString(cursor.getColumnIndex("address"));
-            String subject = cursor.getString(cursor.getColumnIndex("subject"));
-            String message = cursor.getString(cursor.getColumnIndex("message"));
-            Mail mail = new Mail(draftsID, filePath, to, subject, message);
-            myMails.add(mail);
-        }
-
-        cursor.close();
-        return myMails;
-    }
 }
 

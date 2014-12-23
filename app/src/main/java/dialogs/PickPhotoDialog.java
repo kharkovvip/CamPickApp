@@ -1,4 +1,4 @@
-package Dialogs;
+package dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,14 +10,14 @@ import android.provider.MediaStore;
 import trainee.x_prt.campickapp.R;
 import trainee.x_prt.campickapp.activity.ShareActivity;
 
-public class DialogRealization extends android.support.v4.app.DialogFragment {
+public class PickPhotoDialog extends android.support.v4.app.DialogFragment {
 
-    public DialogRealization() {
+    public PickPhotoDialog() {
         // Empty constructor required for DialogFragment
     }
 
-    public static DialogRealization newInstance(String title) {
-        DialogRealization frag = new DialogRealization();
+    public static PickPhotoDialog newInstance(String title) {
+        PickPhotoDialog frag = new PickPhotoDialog();
         Bundle args = new Bundle();
         args.putString("title", title);
         frag.setArguments(args);

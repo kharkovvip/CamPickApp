@@ -16,23 +16,23 @@
         android:src="@drawable/popup_54626e" />
 
     <TextView
-        android:id="@+id/item_txtAdress"
+        android:id="@+id/item_txtAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/item_txtSubject"
         android:layout_alignParentStart="true"
-        android:text="@string/item_adress"
+        android:text="@string/item_address"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/blue_white" />
 
     <TextView
-        android:id="@+id/item_tempAdress"
+        android:id="@+id/item_tempAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/item_icon"
         android:layout_marginStart="15dp"
-        android:layout_toEndOf="@+id/item_txtAdress"
-        android:text="@string/temp_adress"
+        android:layout_toEndOf="@+id/item_txtAddress"
+        android:text="@string/temp_address"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/white" />
 
@@ -40,7 +40,7 @@
         android:id="@+id/item_tempSubject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/item_tempAdress"
+        android:layout_alignStart="@+id/item_tempAddress"
         android:layout_alignTop="@+id/item_txtSubject"
         android:text="@string/temp_subject"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/item_txtAdress"
+        android:layout_below="@+id/item_txtAddress"
         android:layout_marginTop="5dp"
         android:text="@string/item_subject"
         android:textAppearance="?android:attr/textAppearanceSmall"

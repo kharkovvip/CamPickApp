@@ -1,4 +1,4 @@
-package DataBase;
+package database;
 
 public class Mail {
 
@@ -9,7 +9,6 @@ public class Mail {
     private String message;
 
     public Mail(String draftsID, String filePath, String to, String subject, String message) {
-        super();
         this.draftsID = draftsID;
         this.filePath = filePath;
         this.to = to;

@@ -1,4 +1,4 @@
-package Dialogs;
+package dialogs;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -17,7 +17,7 @@ public class DialogBody extends FragmentActivity {
 
     private void showAlertDialog() {
         FragmentManager fm = getSupportFragmentManager();
-        DialogRealization alertDialog = DialogRealization.newInstance("Choose");
+        PickPhotoDialog alertDialog = PickPhotoDialog.newInstance("Choose");
         alertDialog.show(fm, "fragment_alert");
     }
 }

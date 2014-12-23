@@ -22,9 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import DataBase.DataHandler;
-import DataBase.Mail;
-import Dialogs.DialogRealization;
+import database.DataHandler;
+import database.Mail;
+import dialogs.PickPhotoDialog;
 import trainee.x_prt.campickapp.R;
 
 
@@ -78,16 +78,19 @@ public class ShareActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 FragmentManager fm = getSupportFragmentManager();
-                DialogRealization alertDialog = DialogRealization.newInstance("Some title");
+                PickPhotoDialog alertDialog = PickPhotoDialog.newInstance("Some title");
                 alertDialog.show(fm, "fragment_alert");
             }
         });
+        initMail();
+    }
 
-        // Clicked Item
+    // Clicked Item
+    private void initMail() {
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey(MAIL_ID)) {
             String mailId = extras.getString(MAIL_ID);
-            Mail mail = dataHandler.getMail(mailId);
+            Mail mail = dataHandler.getDraft(mailId);
             textTo.setText(mail.getTo());
             textSubject.setText(mail.getSubject());
             textMessage.setText(mail.getMessage());
