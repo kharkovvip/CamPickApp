@@ -82,6 +82,7 @@ public class ShareActivity extends FragmentActivity {
                 alertDialog.show(fm, "fragment_alert");
             }
         });
+
         initMail();
     }
 
@@ -108,12 +109,14 @@ public class ShareActivity extends FragmentActivity {
         if (resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap;
+
             if (extras == null) {
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
                 Cursor cursor = getContentResolver().query(
                         selectedImage, filePathColumn, null, null, null);
                 cursor.moveToFirst();
+
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 filePath = cursor.getString(columnIndex);
                 cursor.close();
@@ -137,7 +140,7 @@ public class ShareActivity extends FragmentActivity {
 
             File pickDirectory = new File("/sdcard/CamPickApp");
             pickDirectory.mkdirs();
-            filePath = new String(pickDirectory + "/Pick_" + System.currentTimeMillis() + ".png");
+            filePath = pickDirectory + "/Pick_" + System.currentTimeMillis() + ".png";
             FileOutputStream fo = new FileOutputStream(new File(filePath));
             fo.write(byteArray);
             fo.flush();
